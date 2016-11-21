@@ -2,8 +2,6 @@ package com.jnlc.codegenerate.main;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -51,22 +49,28 @@ public class CodeGenerate {
 		}
 	}
 
+	/**
+	 * 根据实体生成表
+	 */
 	private static void generateTableByEntity() {
 		DocumentBuilderFactory  dBuilderFactory=DocumentBuilderFactory.newInstance();
 		try {
+			//读取配置文件
 			File file= new File("src\\main\\resources\\generateConfig.xml");
-			System.out.println(file);
 			DocumentBuilder documentBuilder= dBuilderFactory.newDocumentBuilder();
 			Document document=documentBuilder.parse(file);
 			Element rootElement =document.getDocumentElement();
+			//获取实体对应的配置信息
 			NodeList nodeList= rootElement.getElementsByTagName("javaModelGenerator");
 			Element javaModelElement=(Element) nodeList.item(0);
 			NamedNodeMap namedNodeMap= javaModelElement.getAttributes();
-			//报名
+			//包名称
 			String targetPackage=namedNodeMap.getNamedItem("targetPackage").getNodeValue();
 			//实体类存放路径
 			String targetProject=namedNodeMap.getNamedItem("targetProject").getNodeValue();
+			//获取实体类文件夹下对应的java文件
 			List<File> files=getFiles(targetProject);
+			//循环遍历java文件，利用反射获取对应的属性
 			for (File classFile : files) {
 				Class temp= Class.forName(targetPackage.concat(".").concat( classFile.getName().split(".java")[0]));
 				System.out.println(temp);
