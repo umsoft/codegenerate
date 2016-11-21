@@ -32,6 +32,6 @@
 		<!-- 当选择的是MyBatis时需要配置以下项 end-->
        <!-- 配置数据对应表 -->
 		<tables>
-			 <table tableName="UC_UserBind" domainObjectName="UserBind"></table>
+			 <table tableName="UC_Student" domainObjectName="Student"></table>
 		</tables>
 </generatorConfiguration>
