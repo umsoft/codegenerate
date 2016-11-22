@@ -6,7 +6,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -63,12 +62,16 @@ public class CodeGenerate {
 		try {
 			//读取配置文件
 			File file= new File("src\\main\\resources\\generateConfig.xml");
+			//获取文档对象构造器
 			DocumentBuilder documentBuilder= dBuilderFactory.newDocumentBuilder();
+			//获取对应的XML文档对象
 			Document document=documentBuilder.parse(file);
+			//获取根节点
 			Element rootElement =document.getDocumentElement();
 			//获取实体对应的配置信息
 			NodeList nodeList= rootElement.getElementsByTagName("javaModelGenerator");
 			Element javaModelElement=(Element) nodeList.item(0);
+			//获取元素中各个属性信息
 			NamedNodeMap namedNodeMap= javaModelElement.getAttributes();
 			//包名称
 			String targetPackage=namedNodeMap.getNamedItem("targetPackage").getNodeValue();
